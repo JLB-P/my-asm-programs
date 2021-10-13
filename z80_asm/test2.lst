@@ -1,0 +1,33 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;Programa principal
+0002   0000             	.org 0000h
+0003   0000 31 FF FF    	ld sp,stack
+0004   0003 3E 23       	ld a,23h
+0005   0005 06 07       	ld b,7h
+0006   0007 CD 0A 00    	call sumale
+0007   000A             
+0008   000A             ;subrutinas
+0009   000A             sumale:
+0010   000A 80          	add a,b
+0011   000B 67          	ld h,a
+0012   000C C9          	ret
+0013   000D             
+0014   000D             ;definición del inicio para las variables
+0015   000D             	.org 0f7ffh
+0016   F7FF 55          var1 db 55h
+0017   F800 54 6F 64 6F text db "Todos estan aprobados"
+0017   F804 73 20 65 73 
+0017   F808 74 61 6E 20 
+0017   F80C 61 70 72 6F 
+0017   F810 62 61 64 6F 
+0017   F814 73          
+0018   F815             ;dfeine apuntador a la pila (SP)
+0019   F815 31 00 02    	ld sp,0200h
+0020   F818             ;dfeine apuntador a la pila (SP)
+0021   F818             stack equ 0ffffh
+0022   F818             
+0023   F818             end ;termina el programa
+Number of errors = 0

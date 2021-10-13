@@ -1,0 +1,47 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;--------------------------------------------
+0002   0000             ;Programa de ejemplo:
+0003   0000             ;Programa que muestra una secuencia de encendido
+0004   0000             ;de los LEDS's en el puerto A (00h)
+0005   0000             ;--------------------------------------------
+0006   0000             ;Programa principal
+0007   0000             	.org 0000h
+0008   0000 31 FF FF    	ld sp,stack	;define inicio de stack
+0009   0003             	;------------------
+0010   0003 3E 82       	ld a,82h 	;PuertoA -> salida, PuertoB <- entrada
+0011   0005 D3 03       	out (03h),a	;PuertoC (PC0 y PC1) -> salida
+0012   0007             	;------------Para el simulador, no es necesario
+0013   0007             ciclo:
+0014   0007 3E 01       	ld a,00000001b
+0015   0009 06 07       	ld b,7		;contador
+0016   000B             ciclo1:
+0017   000B D3 00       	out (00),a
+0018   000D CB 27       	sla a
+0019   000F 10 FA       	djnz ciclo1
+0020   0011 06 08       	ld b,8		;contador
+0021   0013             ciclo2:
+0022   0013 D3 00       	out (00),a
+0023   0015 CB 3F       	srl a
+0024   0017 10 FA       	djnz ciclo2
+0025   0019 C3 07 00    	jp ciclo
+0026   001C 76          	halt ;detiene la simulación
+0027   001D             
+0028   001D             ;subrutinas
+0029   001D             
+0030   001D             ;define del inicio para las variables
+0031   001D             	.org 0f7ffh
+0032   F7FF 54 6F 64 6F text db "Todos estan aprobados"
+0032   F803 73 20 65 73 
+0032   F807 74 61 6E 20 
+0032   F80B 61 70 72 6F 
+0032   F80F 62 61 64 6F 
+0032   F813 73          
+0033   F814             
+0034   F814             ;define apuntador a la pila (SP)
+0035   F814             stack	equ 0ffffh
+0036   F814             
+0037   F814             end ;termina el programa
+Number of errors = 0
