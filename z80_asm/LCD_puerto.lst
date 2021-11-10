@@ -1,0 +1,48 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;--------------------------------------------
+0002   0000             ;Programa que muestra textos en una
+0003   0000             ;pantalla puerto A (00h)
+0004   0000             ;--------------------------------------------
+0005   0000             ;Programa principal
+0006   0000             	.org 0000h
+0007   0000 31 FF FF    	ld sp,stack	;define inicio de stack
+0008   0003             	;------------------
+0009   0003 3E 82       	ld a,82h 	;PuertoA -> salida, PuertoB <- entrada
+0010   0005 D3 03       	out (CW),a	;PuertoC (PC0 y PC1) -> salida
+0011   0007             	;------------Para el simulador, no es necesario
+0012   0007 21 FF F7    	ld hl,text
+0013   000A             ciclo:
+0014   000A 7E          	ld a,(hl)
+0015   000B FE 24       	cp '$'
+0016   000D CA 24 F8    	jp z,fin
+0017   0010 D3 00       	out (LCD),a
+0018   0012 23          	inc hl
+0019   0013 18 F5       	jr ciclo
+0020   0015             
+0021   0015             ;subrutinas
+0022   0015             
+0023   0015             ;define del inicio para las variables
+0024   0015             	.org 0f7ffh
+0025   F7FF 41 20 70 72 text db "A programar se aprende...programando$"
+0025   F803 6F 67 72 61 
+0025   F807 6D 61 72 20 
+0025   F80B 73 65 20 61 
+0025   F80F 70 72 65 6E 
+0025   F813 64 65 2E 2E 
+0025   F817 2E 70 72 6F 
+0025   F81B 67 72 61 6D 
+0025   F81F 61 6E 64 6F 
+0025   F823 24          
+0026   F824             
+0027   F824             ;define apuntador a la pila (SP)
+0028   F824             stack	equ 0ffffh
+0029   F824             CW	equ 03h	;dirección del registro CW de
+0030   F824             LCD	equ 00h	;dirección de la pantalla LCD
+0031   F824             
+0032   F824             fin:
+0033   F824 76          	halt
+0034   F825             	end ;termina el programa
+Number of errors = 0

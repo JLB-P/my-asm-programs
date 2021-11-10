@@ -1,0 +1,42 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;--------------------------------------------
+0002   0000             ;Programa que muestra textos en una
+0003   0000             ;pantalla puerto A (00h)
+0004   0000             ;--------------------------------------------
+0005   0000             ;Programa principal
+0006   0000             	.org 0000h
+0007   0000 31 FF FF    	ld sp,stack	;define inicio de stack
+0008   0003             	;------------------
+0009   0003 3E 82       	ld a,82h 	;PuertoA -> salida, PuertoB <- entrada
+0010   0005 D3 03       	out (CW),a	;PuertoC (PC0 y PC1) -> salida
+0011   0007             	;------------Para el simulador, no es necesario
+0012   0007             
+0013   0007 DB 01       	in a,(KEYB)
+0014   0009 D3 00       	out (LCD),a
+0015   000B 76          	halt
+0016   000C             
+0017   000C             ;subrutinas
+0018   000C             
+0019   000C             ;define del inicio para las variables
+0020   000C             	.org 0f7ffh
+0021   F7FF 52 65 63 69 text db "Recibe INT en Modo 1$"
+0021   F803 62 65 20 49 
+0021   F807 4E 54 20 65 
+0021   F80B 6E 20 4D 6F 
+0021   F80F 64 6F 20 31 
+0021   F813 24          
+0022   F814             
+0023   F814             ;define apuntador a la pila (SP)
+0024   F814             stack	equ 0ffffh
+0025   F814             CW	equ 03h	;dirección del registro CW de
+0026   F814             LCD	equ 00h	;dirección de la pantalla LCD
+0027   F814             KEYB	equ 01h	;dirección del teclado
+0028   F814             
+0029   F814             
+0030   F814             fin:
+0031   F814 76          	halt
+0032   F815             	end ;termina el programa
+Number of errors = 0

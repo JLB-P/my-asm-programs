@@ -1,0 +1,68 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;--------------------------------------------
+0002   0000             ;Programa que muestra textos en una
+0003   0000             ;pantalla puerto A (00h)
+0004   0000             ;--------------------------------------------
+0005   0000             ;Programa principal
+0006   0000 C3 00 01    	jp 0100h	;salta al programa principal
+0007   0003             
+0008   0003             	;-------------------------------------------------
+0009   0003             	;inicio de la rutina de atencíón a la interrupción
+0010   0003             	.org 038h
+0011   0038 F3          	DI	;deshabilita las interrupciones
+0012   0039 3E 01       	ld a,1
+0013   003B 32 0C F8    	ld (flag),a
+0014   003E FB          	EI	;antes de salir, habilita las interrupciones
+0015   003F ED 4D       	reti
+0016   0041             
+0017   0041             	;-------------------------------------------------
+0018   0041             
+0019   0041             	.org 0100h
+0020   0100 31 FF FF    	ld sp,stack	;define inicio de stack
+0021   0103             	;------------------
+0022   0103 3E 82       	ld a,82h 	;PuertoA -> salida, PuertoB <- entrada
+0023   0105 D3 03       	out (CW),a	;PuertoC (PC0 y PC1) -> salida
+0024   0107             	;------------Para el simulador, no es necesario
+0025   0107             
+0026   0107 ED 56       	IM 1	;define modo de interrupciones
+0027   0109 FB          	EI	;habilita las interrupciones
+0028   010A             
+0029   010A             ciclo_infinito:
+0030   010A 21 0C F8    	ld hl,flag
+0031   010D 7E          	ld a,(hl)
+0032   010E FE 01       	cp 1
+0033   0110 28 03       	jr z,desp_txt
+0034   0112 C3 0A 01    	jp ciclo_infinito
+0035   0115             
+0036   0115             ;subrutinas
+0037   0115             desp_txt:
+0038   0115 21 FF F7    	ld hl,text
+0039   0118 3E 00       	ld a,0
+0040   011A 32 0C F8    	ld (flag),a
+0041   011D             ciclo:
+0042   011D 7E          	ld a,(hl)
+0043   011E FE 24       	cp '$'
+0044   0120 CA 0A 01    	jp z,ciclo_infinito
+0045   0123 D3 00       	out (LCD),a
+0046   0125 23          	inc hl
+0047   0126 18 F5       	jr ciclo
+0048   0128             
+0049   0128             
+0050   0128             ;define del inicio para las variables
+0051   0128             	.org 0f7ffh
+0052   F7FF 49 4E 54 20 text db "INT recibida$"
+0052   F803 72 65 63 69 
+0052   F807 62 69 64 61 
+0052   F80B 24          
+0053   F80C 00          flag db 00
+0054   F80D             
+0055   F80D             ;define apuntador a la pila (SP)
+0056   F80D             stack	equ 0ffffh
+0057   F80D             CW	equ 03h	;dirección del registro CW de
+0058   F80D             LCD	equ 00h	;dirección de la pantalla LCD
+0059   F80D             
+0060   F80D             	end ;termina el programa
+Number of errors = 0
