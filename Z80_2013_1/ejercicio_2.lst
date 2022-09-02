@@ -1,0 +1,19 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;Programa que realiza un conteo de 500 -> 0
+0002   0000             ;Autor: jlb
+0003   0000             
+0004   0000             	;inicia valores en registros
+0005   0000 06 FA       	ld b,250 ; carga valor de conteo
+0006   0002 0E 02       	ld c,2
+0007   0004             ciclo:
+0008   0004 10 FE       	djnz ciclo
+0009   0006 06 FA       	ld b,250
+0010   0008 0D          	dec c
+0011   0009 C2 04 00    	jp nz, ciclo
+0012   000C             fin:
+0013   000C 76          	halt
+0014   000D             end
+Number of errors = 0

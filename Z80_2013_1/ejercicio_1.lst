@@ -1,0 +1,20 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ;Programa que realiza un conteo incremental de 0 -> 500
+0002   0000             ;Autor: jlb
+0003   0000             
+0004   0000             	;inicia valores en registros
+0005   0000 01 00 00    	ld bc,0 ; carga valor de conteo
+0006   0003             ciclo:
+0007   0003 03          	inc bc
+0008   0004 21 F4 01    	ld hl,500
+0009   0007 ED 42       	sbc hl,bc
+0010   0009 CA 0F 00    	jp z,fin
+0011   000C C3 03 00    	jp ciclo
+0012   000F             
+0013   000F             fin:
+0014   000F 76          	halt
+0015   0010             end
+Number of errors = 0
