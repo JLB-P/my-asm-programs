@@ -1,0 +1,42 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ; programa que despliega un texto en pantalla
+0002   0000             ; author: jlb
+0003   0000             ;
+0004   0000             ; programa principal
+0005   0000             	org 0000h
+0006   0000 3E 8A       	ld a, 10001010b
+0007   0002 D3 03       	out (cw),a ; programa el puerto A como salida
+0008   0004 21 00 30    	ld hl,texto
+0009   0007             ciclo:
+0010   0007 7E          	ld a,(hl)
+0011   0008 D3 00       	out (lcd),a
+0012   000A 23          	inc hl
+0013   000B FE 24       	cp '$'
+0014   000D CA 13 00    	jp z,fin
+0015   0010 C3 07 00    	jp ciclo
+0016   0013             
+0017   0013             fin:
+0018   0013 76          	halt
+0019   0014             end
+0020   0014             ;subrutinas
+0021   0014             
+0022   0014             ;contantes
+0023   0014             stack 	equ 37FFh	; dirección del final de la RAM
+0024   0014             lcd 	equ 00h	; dirección el puerto A
+0025   0014             cw	equ 03h ; dirección de la palabra de control del 8255
+0026   0014             
+0027   0014             ;declaración de variables
+0028   0014             	org 3000h
+0029   3000 45 73 74 65 texto	db "Estefanía está reprobada...$"
+0029   3004 66 61 6E ED 
+0029   3008 61 20 65 73 
+0029   300C 74 E1 20 72 
+0029   3010 65 70 72 6F 
+0029   3014 62 61 64 61 
+0029   3018 2E 2E 2E 24 
+0030   301C             
+0031   301C             
+Number of errors = 0

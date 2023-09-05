@@ -1,0 +1,28 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             	.ORG 0000H
+0002   0000 06 99       	LD B,99H	;digit 1 on B register
+0003   0002 0E 99       	LD C,99H	;digit 2 on C
+0004   0004 78          	LD A,B
+0005   0005 81          	ADD A,C
+0006   0006 27          	DAA
+0007   0007 57          	LD D,A
+0008   0008 3E 00       	LD A,0
+0009   000A 17          	RLA 		;backup carry
+0010   000B 67          	LD H,A
+0011   000C 7A          	LD A,D
+0012   000D E6 0F       	AND 00001111b
+0013   000F 5F          	LD E,A		;load digit 1 of the result
+0014   0010 CB 3A       	SRL D		;shift 4 digits to right
+0015   0012 CB 3A       	SRL D
+0016   0014 CB 3A       	SRL D
+0017   0016 CB 3A       	SRL D
+0018   0018 7A          	LD A,D
+0019   0019 E6 0F       	AND 00001111b
+0020   001B 57          	LD D,A		;load digit 2 of the result
+0021   001C 7C          	LD A,H		;load carry status
+0022   001D 76          	halt
+0023   001E             	.END
+Number of errors = 0
