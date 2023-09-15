@@ -1,0 +1,54 @@
+---------------------------------------------
+Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ; PROGRAMA QUE LEE UN TEXTO DE MEMORIA
+0002   0000             ; Y LO DESPLIEGA EN LA PANATALLA
+0003   0000             ;PROGRAMA PRINCIPAL
+0004   0000             	.ORG	0000H	;CODIGO
+0005   0000 31 FF 27    	LD SP,27FFH	;INICIA STACX
+0006   0003 21 00 20    	LD HL,TEXTO1
+0007   0006 CD 21 20    	CALL DESP_TEXTO
+0008   0009 CD 2E 20    	CALL LEE_TECLADO
+0009   000C 21 14 20    	LD HL,TEXTO2
+0010   000F CD 21 20    	CALL DESP_TEXTO
+0011   0012 76          	HALT
+0012   0013             
+0013   0013             	.ORG	2000H ;DATOS
+0014   2000 45 53 43 52 TEXTO1 .DB	"ESCRIBE TU NOMBRE: &"
+0014   2004 49 42 45 20 
+0014   2008 54 55 20 4E 
+0014   200C 4F 4D 42 52 
+0014   2010 45 3A 20 26 
+0015   2014 4F 4B 3A 20 TEXTO2 .DB	"OK: &"
+0015   2018 26          
+0016   2019 20 20 20 20 NOMBRE .DB 	"        "
+0016   201D 20 20 20 20 
+0017   2021             LCD	.EQU	00H
+0018   2021             KEYB	.EQU	01H
+0019   2021             
+0020   2021             ;SUBRUTINAS
+0021   2021             DESP_TEXTO:
+0022   2021 7E          	LD A,(HL)
+0023   2022 FE 26       	CP '&'
+0024   2024 CA 2D 20    	JP Z,FIN
+0025   2027 D3 00       	OUT (LCD),A
+0026   2029 23          	INC HL
+0027   202A C3 21 20    	JP DESP_TEXTO
+0028   202D             FIN:
+0029   202D C9          	RET
+0030   202E             
+0031   202E             LEE_TECLADO:
+0032   202E 21 19 20    	LD HL,NOMBRE
+0033   2031             CICLO2:
+0034   2031 DB 01       	IN A,(KEYB)
+0035   2033 77          	LD (HL),A
+0036   2034 FE 0D       	CP 0DH
+0037   2036 CA 3D 20    	JP Z,FIN2
+0038   2039 23          	INC HL
+0039   203A C3 31 20    	JP CICLO2
+0040   203D             FIN2:
+0041   203D C9          	RET
+0042   203E             
+0043   203E             	.END
+Number of errors = 0
